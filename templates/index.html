@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade Calculator</title>
+</head>
+<body>
+    <h1>UIC Global Course Grade Calculator</h1>
+    
+    <p>Welcome to the Grade Calculator. Here's how to use it:</p>
+<ul>
+    <li><strong>Category:</strong> The type of assessment (e.g., "Homework", "Exams", "Projects") Look on your class syllabus to find these categories .</li>
+    <li><strong>Weight:</strong> The importance of the category in percentage towards your final grade (e.g., if homework is 20% of your grade, enter "20").</li>
+    <li><strong>Grade:</strong> The score you received for the category as a percentage (e.g., if you received an 85% on homework, enter "85").</li>
+</ul>
+<p>After filling in the details, click "Add Category" to include any other categories in your grade calculation. Make sure the total weight equals 100% for an accurate final grade prediction. Once you are done adding all your categories click on "Calculate final grade"</p>
+
+
+
+    {% if error_message %}
+    <p style="color: red;">{{ error_message }}</p>
+    {% endif %}
+
+    <form action="/" method="post">
+        <label for="category">Category:</label>
+        <input type="text" id="category" name="category" required><br><br>
+        <label for="weight">Weight (0-100):</label>
+        <input type="number" id="weight" name="weight" min="0" max="100" required><br><br>
+        <label for="grade">Grade (0-100):</label>
+        <input type="number" id="grade" name="grade" min="0" max="100" required><br><br>
+        <input type="submit" value="Add Category">
+    </form>
+    
+    <!-- Display added categories -->
+    {% if grades %}
+    <h2>Added Categories</h2>
+    <ul>
+        {% for category, details in grades.items() %}
+        <li>{{ category }} - Weight: {{ details.weight }}%, Grade: {{ details.grade }}%</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <!-- Reset Button -->
+    <form action="{{ url_for('reset') }}" method="post">
+        <input type="submit" value="Reset Calculator">
+    </form>
+
+    <!-- Link to calculate the final grade -->
+    <a href="{{ url_for('result') }}">Calculate Final Grade</a>
+
+    <!-- Disclaimer at the bottom of the page -->
+    <footer>
+        <p><strong>Disclaimer - This calculator provides an estimate of the final grade based on the weighted average of entered grades and weights. It is intended for planning and informational purposes only, and it does not represent an official final grade.</small></p>
+    </footer>
+</body>
+</html>
