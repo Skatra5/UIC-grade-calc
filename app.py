@@ -29,7 +29,7 @@ def index():
             session['grades'] = {}
             session['total_weight'] = 0
 
-        # Preventing the total weight from exceeding 100%
+        # Preventing the total weight from exceeding 100%.
         if session['total_weight'] + weight > 100:
             error_message = "Total weight cannot exceed 100%. Please adjust the weights."
             return render_template('index.html', error_message=error_message, grades=session['grades'])
